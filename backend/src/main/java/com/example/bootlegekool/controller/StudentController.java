@@ -1,11 +1,11 @@
 package com.example.bootlegekool.controller;
 
-import com.example.bootlegekool.Student;
+import com.example.bootlegekool.models.Student;
 import com.example.bootlegekool.service.StudentService;
-import org.springframework.beans.factory.annotation.*;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.*;
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/v1/ekool")

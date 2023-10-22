@@ -1,14 +1,17 @@
 package com.example.bootlegekool.service;
 
-import com.example.bootlegekool.Student;
-import com.example.bootlegekool.exception.*;
+import com.example.bootlegekool.exception.BadRequestException;
+import com.example.bootlegekool.exception.StudentNotFoundException;
+import com.example.bootlegekool.models.Student;
 import com.example.bootlegekool.repository.StudentRepository;
-import org.springframework.beans.factory.annotation.*;
-import org.springframework.stereotype.*;
+import lombok.AllArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
-import java.util.*;
+import java.util.List;
 
 @Service
+@AllArgsConstructor
 public class StudentService {
 
     @Autowired
@@ -31,9 +34,9 @@ public class StudentService {
     }
 
     //Delete Student
-    public void deleteStudent(Long studentId){
+    public void deleteStudent(Long studentId) {
 
-        if (!studentRepository.existsById(studentId)){
+        if (!studentRepository.existsById(studentId)) {
             throw new StudentNotFoundException("Student with id " + studentId + " does not exist");
         }
 
