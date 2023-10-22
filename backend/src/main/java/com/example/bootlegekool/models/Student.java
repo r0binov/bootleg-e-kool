@@ -2,36 +2,31 @@ package com.example.bootlegekool.models;
 
 
 import jakarta.persistence.*;
-import lombok.Data;
+import jakarta.validation.constraints.Email;
+import lombok.*;
 
-import java.util.Date;
-
-
+@ToString
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity
-@Data
-@Table(name = "student")
+@Table(name = "students", schema = "school")
 public class Student {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long studentId;
-
+    private Long id;
     @Column(nullable = false)
-    private String firstName;
-
-    @Column(nullable = false)
-    private String lastName;
-
-    private Date dateOfBirth;
-
-    @Column
+    private String name;
+    @Email
+    @Column(nullable = false, unique = true)
     private String email;
 
-    public Student(Long studentId, String firstName, String lastName, Date dateOfBirth, String email) {
-        this.studentId = studentId;
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.dateOfBirth = dateOfBirth;
+    public Student(String name, String email){
+        this.name = name;
         this.email = email;
     }
+
 }
 

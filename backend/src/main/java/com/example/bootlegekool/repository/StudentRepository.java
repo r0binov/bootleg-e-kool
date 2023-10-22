@@ -1,5 +1,6 @@
-package com.example.bootlegekool;
+package com.example.bootlegekool.repository;
 
+import com.example.bootlegekool.Student;
 import org.springframework.data.jpa.repository.*;
 import org.springframework.stereotype.*;
 

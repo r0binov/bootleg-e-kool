@@ -1,6 +1,8 @@
-package com.example.bootlegekool;
+package com.example.bootlegekool.service;
 
+import com.example.bootlegekool.Student;
 import com.example.bootlegekool.exception.*;
+import com.example.bootlegekool.repository.StudentRepository;
 import org.springframework.beans.factory.annotation.*;
 import org.springframework.stereotype.*;
 

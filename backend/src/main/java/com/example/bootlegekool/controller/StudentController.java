@@ -1,5 +1,7 @@
-package com.example.bootlegekool;
+package com.example.bootlegekool.controller;
 
+import com.example.bootlegekool.Student;
+import com.example.bootlegekool.service.StudentService;
 import org.springframework.beans.factory.annotation.*;
 import org.springframework.web.bind.annotation.*;
 
