@@ -10,7 +10,7 @@ import java.util.List;
 
 @AllArgsConstructor
 @RestController
-@RequestMapping(path = "/api/v1/ekool")
+@RequestMapping(path = "/api/v1/ekool/grade")
 public class GradeController {
     private final GradeService gradeService;
     @GetMapping(path = "/")
