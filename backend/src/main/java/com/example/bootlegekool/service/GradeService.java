@@ -1,34 +1,73 @@
 package com.example.bootlegekool.service;
 
+import com.example.bootlegekool.dto.GradeDTO;
+import com.example.bootlegekool.dto.UpdateGradeDTO;
 import com.example.bootlegekool.models.Grade;
+import com.example.bootlegekool.models.Student;
+import com.example.bootlegekool.models.Subject;
 import com.example.bootlegekool.repository.GradeRepository;
+import com.example.bootlegekool.repository.StudentRepository;
+import com.example.bootlegekool.repository.SubjectRepository;
+import jakarta.persistence.EntityNotFoundException;
 import lombok.AllArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
-@AllArgsConstructor
 public class GradeService {
     private final GradeRepository gradeRepository;
+    private final StudentRepository studentRepository;
+    private final SubjectRepository subjectRepository;
+
+    @Autowired
+    public GradeService(
+            GradeRepository gradeRepository,
+            StudentRepository studentRepository,
+            SubjectRepository subjectRepository
+    ) {
+        this.gradeRepository = gradeRepository;
+        this.studentRepository = studentRepository;
+        this.subjectRepository = subjectRepository;
+    }
 
     public List<Grade> getAllGrades() {
         return gradeRepository.findAll();
     }
 
-    public Grade addGrade(Grade grade) {
+    public Grade addGrade(GradeDTO gradeDTO) {
+        // Retrieve the Student and Subject entities based on the provided IDs in gradeDTO
+        Student student = studentRepository.findById(gradeDTO.getStudentId())
+                .orElseThrow(() -> new RuntimeException("Student not found"));
+        Subject subject = subjectRepository.findById(gradeDTO.getSubjectId())
+                .orElseThrow(() -> new RuntimeException("Subject not found"));
+
+        // Create a new Grade object and set the Student, Subject, and gradeValue
+        Grade grade = new Grade();
+        grade.setStudent(student);
+        grade.setSubject(subject);
+        grade.setGradeValue(gradeDTO.getGradeValue());
+
+        // Save the grade object in your database using your JPA or Hibernate logic
         return gradeRepository.save(grade);
     }
 
-    public String updateGrade(Long id, Grade updatedGrade) {
-        if (gradeRepository.existsById(id)) {
-            updatedGrade.setGradeId(id);
-            gradeRepository.save(updatedGrade);
+    public String updateGrade(UpdateGradeDTO updateGradeDTO) {
+        Long gradeId = updateGradeDTO.getGradeId();
+        int newGradeValue = updateGradeDTO.getGradeValue();
 
-            return "Grade with ID " + id + " updated successfully.";
-        }
+        // Retrieve the existing Grade entity by ID
+        Grade existingGrade = gradeRepository.findById(gradeId)
+                .orElseThrow(() -> new RuntimeException("Grade not found"));
 
-        return "Grade with ID " + id + " not found. Update failed.";
+        // Update the gradeValue
+        existingGrade.setGradeValue(newGradeValue);
+
+        // Save the updated Grade entity
+        gradeRepository.save(existingGrade);
+
+        return "Grade with ID " + gradeId + " updated successfully.";
     }
 
     public String deleteGrade(Long id) {

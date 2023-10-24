@@ -5,6 +5,8 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import lombok.*;
 
+import java.util.List;
+
 @ToString
 @Getter
 @Setter
@@ -16,7 +18,8 @@ public class Student {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    @Column(name = "student_id")
+    private Long studentId;
     @Column(nullable = false)
     private String name;
     @Email

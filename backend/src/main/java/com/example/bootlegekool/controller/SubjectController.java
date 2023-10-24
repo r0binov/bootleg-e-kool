@@ -17,9 +17,8 @@ public class SubjectController {
     private final SubjectService subjectService;
 
     @GetMapping("/")
-    public ResponseEntity<List<Subject>> getAllSubjects() {
-        List<Subject> subjects = subjectService.getAllSubjects();
-        return new ResponseEntity<>(subjects, HttpStatus.OK);
+    public List<Subject> getAllSubjects() {
+        return subjectService.getAllSubjects();
     }
 
     @GetMapping("/{id}")
@@ -37,7 +36,7 @@ public class SubjectController {
         return new ResponseEntity<>(createdSubject, HttpStatus.CREATED);
     }
 
-    @PutMapping("/deleteSubject/{id}")
+    @PutMapping("/updateSubject/{id}")
     public ResponseEntity<Subject> updateSubject(@PathVariable("id") Long id, @RequestBody Subject subject) {
         if (!subjectService.getSubjectById(id).isPresent()) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -47,7 +46,7 @@ public class SubjectController {
         return new ResponseEntity<>(updatedSubject, HttpStatus.OK);
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/deleteSubject/{id}")
     public ResponseEntity<Void> deleteSubject(@PathVariable("id") Long id) {
         if (!subjectService.getSubjectById(id).isPresent()) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
