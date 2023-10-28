@@ -1,5 +1,4 @@
 import {Component, Injectable, OnInit} from '@angular/core';
-import {HttpClient} from "@angular/common/http";
 import {GradeService} from "./service/grade.service";
 import {GradeModel} from "./model/grade.model";
 
@@ -9,10 +8,12 @@ import {GradeModel} from "./model/grade.model";
   styleUrls: ['./app.component.css']
 })
 @Injectable({providedIn: "root"})
-export class AppComponent implements OnInit{
+export class AppComponent implements OnInit {
   title = 'frontend';
+
   constructor(private gradeService: GradeService) {
   }
+
   grade: GradeModel[] = [];
 
   ngOnInit(): void {
