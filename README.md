@@ -1,6 +1,8 @@
 # bootleg-e-kool
 
 #In order to get data into the database after you have run the backend application and the schema has been created.
+
+
 INSERT INTO student (name, email)
 VALUES
     ('John Doe', 'johndoe@example.com'),
@@ -19,7 +21,7 @@ VALUES
     ('Computer Science');
 
 
-INSERT INTO grade (student_id, subject_id, grade_value)
+INSERT INTO grade (student_id, subject_id, grade)
 VALUES
     (1, 1, 90),
     (1, 2, 85),
