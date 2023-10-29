@@ -5,10 +5,12 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { GradeService } from './service/grade.service';
 import {HttpClientModule} from "@angular/common/http";
+import { GradeComponent } from './components/grade/grade.component';
 
 @NgModule({
   declarations: [
     AppComponent,
+    GradeComponent,
   ],
   imports: [
     BrowserModule,

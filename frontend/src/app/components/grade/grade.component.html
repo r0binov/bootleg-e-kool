@@ -1,0 +1,21 @@
+<div *ngIf="grade.length > 0">
+  <h2>Grade Details</h2>
+  <table>
+    <thead>
+    <tr>
+      <th>Grade Value</th>
+      <th>Student Name</th>
+      <th>Student Email</th>
+      <th>Subject Name</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let g of grade">
+      <td>{{ g.gradeValue }}</td>
+      <td>{{ g.student.name }}</td>
+      <td>{{ g.student.email }}</td>
+      <td>{{ g.subject.subjectName }}</td>
+    </tr>
+    </tbody>
+  </table>
+</div>
