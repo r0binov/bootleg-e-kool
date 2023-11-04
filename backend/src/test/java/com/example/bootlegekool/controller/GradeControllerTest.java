@@ -1,4 +1,4 @@
-package com.example.bootlegekool.controllerTest;
+package com.example.bootlegekool.controller;
 
 import com.example.bootlegekool.controller.GradeController;
 import com.example.bootlegekool.dto.GradeDTO;

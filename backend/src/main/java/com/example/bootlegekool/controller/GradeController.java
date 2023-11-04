@@ -33,7 +33,7 @@ public class GradeController {
         return gradeService.updateGrade(updateGradeDTO);
     }
     @DeleteMapping(path = "/deleteGrade/{id}")
-    public String deleteGrade(@PathVariable("id")Long id) {
-        return gradeService.deleteGrade(id);
+    public void deleteGrade(@PathVariable("id")Long id) {
+        gradeService.deleteGrade(id);
     }
 }

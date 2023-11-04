@@ -1,4 +1,4 @@
-package com.example.bootlegekool;
+package com.example.bootlegekool.service;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

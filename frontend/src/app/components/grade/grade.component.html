@@ -1,6 +1,10 @@
-<div *ngIf="grade.length > 0">
-  <h2>Grade Details</h2>
-  <table>
+<h1 style="text-align: center">Travel Logs</h1>
+<div class="table-container"
+     style="border: 1px solid black;
+            border-radius: 5px"
+     *ngIf="grades.length > 0"
+>
+  <table class="table table-striped">
     <thead>
     <tr>
       <th>Grade Value</th>
@@ -10,12 +14,92 @@
     </tr>
     </thead>
     <tbody>
-    <tr *ngFor="let g of grade">
+    <tr *ngFor="let g of grades;">
       <td>{{ g.gradeValue }}</td>
       <td>{{ g.student.name }}</td>
       <td>{{ g.student.email }}</td>
       <td>{{ g.subject.subjectName }}</td>
+      <td style="display: flex; justify-content: space-around">
+        <button type="button" class="btn btn-primary" (click)="editGrade(g)">
+          Edit
+        </button>
+        <button type="button" class="btn btn-danger" (click)="deleteGrade(g.gradeId);">
+          Delete
+        </button>
+      </td>
     </tr>
     </tbody>
   </table>
+</div>
+
+<div class="div-container" *ngIf="!isTableVisible">
+  <div class="div-content" *ngFor="let g of grades">
+    <p>
+      <b> Grade Value </b> {{ g.gradeValue }}
+    </p>
+    <p>
+      <b> Student Name: </b> {{ g.student.name }}
+    </p>
+    <p>
+      <b> Student Email: </b> {{ g.student.email }}
+    </p>
+    <p>
+      <b> Subject Name </b> {{ g.subject.subjectName }}
+    </p>
+    <button type="button" class="btn btn-primary" (click)="editGrade(g); onEditClickScrollToElement()">
+      Edit
+    </button>
+    <button type="button" class="btn btn-danger" (click)="deleteGrade(g.gradeId)">
+      Delete
+    </button>
+  </div>
+</div>
+<form #reportForm="ngForm"
+      *ngIf="isEdit"
+      (ngSubmit)="updateGrade()"
+>
+  <label>Grade Value</label>
+  <input type="number" [(ngModel)]="selectedGrade?.gradeValue" name="Grade Value" placeholder="Value" required/>
+  <label>Student Name</label>
+  <input type="text" [(ngModel)]="selectedGrade" name="Student Name" placeholder="Name" required/>
+  <label>Student Email</label>
+  <input type="email" [(ngModel)]="selectedGrade?.subject.subjectId" name="regNumber" placeholder="Reg Number" required/>
+  <div style="padding-top: 10px">
+    <button type="button" class="btn btn-success" [disabled]="!reportForm.form.valid" (click)="addGrade()">Send</button>
+    <button type="button" class="btn btn-danger" (click)="cancelAddGrade()">Cancel</button>
+  </div>
+</form>
+
+<form *ngIf="!isEdit" (ngSubmit)="addGrade()">
+  <div class="form-group">
+    <label for="subjectId">Subject:</label>
+    <select class="form-control" id="subjectId" [(ngModel)]="newGrade.subjectId" name="subjectId">
+      <option *ngFor="let subject of subjects" [value]="subject.subjectId">{{ subject.subjectName }}</option>
+    </select>
+  </div>
+  <div class="form-group">
+    <label for="studentId">Student:</label>
+    <select class="form-control" id="studentId" [(ngModel)]="newGrade.studentId" name="studentId">
+      <option *ngFor="let student of students" [value]="student.studentId">{{ student.name }}</option>
+    </select>
+  </div>
+  <div class="form-group">
+    <label for="gradeValue">Grade Value:</label>
+    <input type="number" class="form-control" id="gradeValue" [(ngModel)]="newGrade.gradeValue" name="gradeValue">
+  </div>
+  <button type="submit" class="btn btn-primary">Add Grade</button>
+</form>
+<form *ngIf="selectedGrade"
+      #reportForm="ngForm"
+>
+  <label>Grade Value</label>
+  <input type="number" [(ngModel)]="selectedGrade.gradeValue" name="Grade Value" placeholder="Value" required/>
+  <div style="padding-top: 10px;">
+    <button type="submit" class="btn btn-success" [disabled]="!reportForm.form.valid" (click)="updateGrade()">Save
+    </button>
+    <button type="submit" class="btn btn-danger" (click)="cancelEditedGrade()">Cancel</button>
+  </div>
+</form>
+<div style="text-align: center; margin-top: 10px" *ngIf="!expandRow">
+  <button type="button" class="btn btn-info" (click)="expandRow = true">Add Grade</button>
 </div>

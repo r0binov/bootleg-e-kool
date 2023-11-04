@@ -37,19 +37,16 @@ public class GradeService {
     }
 
     public Grade addGrade(GradeDTO gradeDTO) {
-        // Retrieve the Student and Subject entities based on the provided IDs in gradeDTO
         Student student = studentRepository.findById(gradeDTO.getStudentId())
                 .orElseThrow(() -> new RuntimeException("Student not found"));
         Subject subject = subjectRepository.findById(gradeDTO.getSubjectId())
                 .orElseThrow(() -> new RuntimeException("Subject not found"));
 
-        // Create a new Grade object and set the Student, Subject, and gradeValue
         Grade grade = new Grade();
         grade.setStudent(student);
         grade.setSubject(subject);
         grade.setGradeValue(gradeDTO.getGradeValue());
 
-        // Save the grade object in your database using your JPA or Hibernate logic
         return gradeRepository.save(grade);
     }
 
@@ -57,14 +54,12 @@ public class GradeService {
         Long gradeId = updateGradeDTO.getGradeId();
         int newGradeValue = updateGradeDTO.getGradeValue();
 
-        // Retrieve the existing Grade entity by ID
+
         Grade existingGrade = gradeRepository.findById(gradeId)
                 .orElseThrow(() -> new RuntimeException("Grade not found"));
 
-        // Update the gradeValue
         existingGrade.setGradeValue(newGradeValue);
 
-        // Save the updated Grade entity
         gradeRepository.save(existingGrade);
 
         return "Grade with ID " + gradeId + " updated successfully.";

@@ -3,10 +3,14 @@ import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {GradeModel} from "../model/grade.model";
 import {GradeDTOModel} from "../model/gradeDTO.model";
 import {UpdateGradeDTOModel} from "../model/updateGradeDTO.model";
+import {Observable} from "rxjs";
+import {SubjectModel} from "../model/subject.model";
+import {StudentModel} from "../model/student.model";
 
 @Injectable()
 export class GradeService {
   private apiUrl = "http://localhost:8080/api/v1/ekool/grade"
+  private grades: GradeModel[] = [];
   headers = new HttpHeaders({
     'Content-Type': 'application/json',
     'Access-Control-Allow-Origin': '*',
@@ -16,19 +20,31 @@ export class GradeService {
   constructor(private http: HttpClient) {
   }
 
-  getLogsFromApi = () => {
+  setGrades(grades: GradeModel[]): void {
+    this.grades = grades;
+  }
+
+  getGradesFromApi = (): Observable<GradeModel[]> => {
     return this.http.get<GradeModel[]>(this.apiUrl + "/");
+  }
+
+  getSubjectsFromApi = (): Observable<SubjectModel[]> => {
+    return this.http.get<SubjectModel[]>(this.apiUrl + '/getSubjects');
+  }
+
+  getStudentsFromApi = (): Observable<StudentModel[]> => {
+    return this.http.get<StudentModel[]>(this.apiUrl + '/getStudents');
   }
 
   postGradeToApi = (gradeDTO: GradeDTOModel) => {
     return this.http.post(this.apiUrl + "/addGrade", gradeDTO, {headers: this.headers});
   }
 
-  editGradeInApi = (updateGradeDTO: UpdateGradeDTOModel) => {
+  updateGradeInApi = (updateGradeDTO: UpdateGradeDTOModel) => {
     return this.http.put((this.apiUrl + "/updateGrade"), updateGradeDTO, {headers: this.headers});
   }
 
-  deleteGradeInApi = (id: number) => {
+  deleteGradeInApi = (id: number): Observable<any> => {
     return this.http.delete((this.apiUrl + `/deleteGrade/${id}`), {headers: this.headers});
   }
 }

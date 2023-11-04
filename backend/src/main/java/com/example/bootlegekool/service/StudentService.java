@@ -33,9 +33,22 @@ public class StudentService {
         studentRepository.save(student);
     }
 
+    public Student updateStudent(Student student) {
+        Long id = student.getStudentId();
+
+        Student existingStudent = studentRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Student not found"));
+
+        existingStudent.setName(student.getName());
+        existingStudent.setEmail(student.getEmail());
+
+        studentRepository.save(existingStudent);
+
+        return student;
+    }
+
     //Delete Student
     public void deleteStudent(Long studentId) {
-
         if (!studentRepository.existsById(studentId)) {
             throw new StudentNotFoundException("Student with id " + studentId + " does not exist");
         }

@@ -6,6 +6,7 @@ import { AppComponent } from './app.component';
 import { GradeService } from './service/grade.service';
 import {HttpClientModule} from "@angular/common/http";
 import { GradeComponent } from './components/grade/grade.component';
+import {FormsModule} from "@angular/forms";
 
 @NgModule({
   declarations: [
@@ -16,6 +17,7 @@ import { GradeComponent } from './components/grade/grade.component';
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
+    FormsModule,
   ],
   providers: [GradeService],
   bootstrap: [AppComponent]
