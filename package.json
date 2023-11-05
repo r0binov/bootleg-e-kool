@@ -1,0 +1,7 @@
+{
+  "devDependencies": {
+    "@angular/core": "^16.2.12",
+    "@types/jest": "^29.5.7",
+    "@types/mocha": "^10.0.3"
+  }
+}
