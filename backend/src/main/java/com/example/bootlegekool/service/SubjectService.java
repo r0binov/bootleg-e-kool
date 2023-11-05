@@ -1,5 +1,6 @@
 package com.example.bootlegekool.service;
 
+import com.example.bootlegekool.exception.SubjectNotFoundException;
 import com.example.bootlegekool.models.Subject;
 import com.example.bootlegekool.repository.SubjectRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +11,8 @@ import java.util.Optional;
 
 @Service
 public class SubjectService {
+
+
 
     private final SubjectRepository subjectRepository;
 
@@ -29,8 +32,15 @@ public class SubjectService {
     public Optional<Subject> getSubjectById(Long id) {
         return subjectRepository.findById(id);
     }
+    public Subject getSubjectByIdOrThrow(Long id) {
+        return subjectRepository.findById(id)
+                .orElseThrow(() -> new SubjectNotFoundException("Subject not found with ID: " + id));
+    }
 
     public void deleteSubject(Long id) {
+        if (!subjectRepository.existsById(id)) {
+            throw new SubjectNotFoundException("Subject not found with ID: " + id);
+        }
         subjectRepository.deleteById(id);
     }
 }

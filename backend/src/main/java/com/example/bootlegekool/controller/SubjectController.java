@@ -36,6 +36,7 @@ public class SubjectController {
         return new ResponseEntity<>(createdSubject, HttpStatus.CREATED);
     }
 
+
     @PutMapping("/updateSubject/{id}")
     public ResponseEntity<Subject> updateSubject(@PathVariable("id") Long id, @RequestBody Subject subject) {
         if (!subjectService.getSubjectById(id).isPresent()) {
