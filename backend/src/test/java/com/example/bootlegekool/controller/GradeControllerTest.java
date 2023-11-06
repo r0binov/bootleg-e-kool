@@ -66,15 +66,13 @@ public class GradeControllerTest {
     public void testUpdateGrade() throws Exception {
         // Arrange
         UpdateGradeDTO updateGradeDTO = new UpdateGradeDTO();
-
-        when(gradeService.updateGrade(updateGradeDTO)).thenReturn("Grade updated successfully.");
+        when(gradeService.updateGrade(updateGradeDTO)).thenReturn(new Grade());
         MockMvc mockMvc = MockMvcBuilders.standaloneSetup(gradeController).build();
 
         mockMvc.perform(put("/api/v1/ekool/grade/updateGrade")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content("{}"))
-                .andExpect(status().isOk())
-                .andExpect(content().string("Grade updated successfully."));
+                .andExpect(status().isOk());
 
         verify(gradeService, times(1)).updateGrade(updateGradeDTO);
     }

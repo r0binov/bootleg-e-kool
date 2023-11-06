@@ -50,7 +50,7 @@ public class GradeService {
         return gradeRepository.save(grade);
     }
 
-    public String updateGrade(UpdateGradeDTO updateGradeDTO) {
+    public Grade updateGrade(UpdateGradeDTO updateGradeDTO) {
         Long gradeId = updateGradeDTO.getGradeId();
         int newGradeValue = updateGradeDTO.getGradeValue();
 
@@ -60,9 +60,7 @@ public class GradeService {
 
         existingGrade.setGradeValue(newGradeValue);
 
-        gradeRepository.save(existingGrade);
-
-        return "Grade with ID " + gradeId + " updated successfully.";
+        return gradeRepository.save(existingGrade);
     }
 
     public String deleteGrade(Long id) {

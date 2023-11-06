@@ -21,16 +21,20 @@ export class GradeComponent implements OnInit {
   grades: GradeModel[] = [];
   newGrade: GradeDTOModel = new GradeDTOModel(0, 0, 0); // Initialize with default values
   selectedGrade: GradeModel | null = null;
-  updatedGradeValue: number = 0;
   isEdit = false;
 
   subjects: SubjectModel[] = [];
   students: StudentModel[] = [];
 
+  sortColumn: string | null = null;
+  isAscending = true;
+
   @ViewChild('scrollToElement') scrollToElement?: ElementRef;
 
   ngOnInit(): void {
     this.getAllGrades();
+    this.getStudents();
+    this.getSubjects();
   }
 
   @HostListener('window:resize', ['$event'])
@@ -62,8 +66,36 @@ export class GradeComponent implements OnInit {
   }
 
   cancelEditedGrade(): void {
-    // Reset the properties without saving changes
     this.selectedGrade = null;
+  }
+  sortTable(columnName: string) {
+    if (this.sortColumn === columnName) {
+      // If already sorted by the clicked column, toggle the sorting order
+      this.isAscending = !this.isAscending;
+    } else {
+      // If sorting a new column, set the sorting column and order
+      this.sortColumn = columnName;
+      this.isAscending = true;
+    }
+
+    // Sort the grades array based on the selected column
+    this.grades.sort((a, b) => {
+      const aValue = this.getColumnValue(a, columnName);
+      const bValue = this.getColumnValue(b, columnName);
+
+      if (aValue < bValue) {
+        return this.isAscending ? -1 : 1;
+      } else if (aValue > bValue) {
+        return this.isAscending ? 1 : -1;
+      } else {
+        return 0;
+      }
+    });
+  }
+
+  getColumnValue(obj: any, column: string): any {
+    const keys = column.split('.');
+    return keys.reduce((o, key) => (o && o[key]) || null, obj);
   }
 
   getAllGrades(): void {
@@ -77,12 +109,34 @@ export class GradeComponent implements OnInit {
     })
   }
 
+  getSubjects() {
+    this.gradeService.getSubjectsFromApi().subscribe(
+      (subjects: SubjectModel[]) => {
+        this.subjects = subjects;
+      },
+      (error) => {
+        console.error('Error fetching subjects:', error);
+      }
+    );
+  }
+
+  getStudents() {
+    this.gradeService.getStudentsFromApi().subscribe(
+      (students: StudentModel[]) => {
+        this.students = students;
+      },
+      (error) => {
+        console.error('Error fetching students:', error);
+      }
+    );
+  }
+
   addGrade(): void {
     this.gradeService.postGradeToApi(this.newGrade).subscribe({
 
       next: () => {
         this.getAllGrades();
-        this.newGrade = new GradeDTOModel(0,0,0)
+        this.newGrade = new GradeDTOModel(0, 0, 0)
       },
       error: (error) => {
         console.error('Error occured in adding grade:', error);
@@ -97,16 +151,17 @@ export class GradeComponent implements OnInit {
         this.selectedGrade.gradeValue
       );
 
-      this.gradeService.updateGradeInApi(updateGradeDTO).subscribe(
-        () => {
-          this.isEdit = false;
+      this.gradeService.updateGradeInApi(updateGradeDTO).subscribe({
+        next: () => {
+          this.expandRow = false;
           this.selectedGrade = null;
-          this.getAllGrades(); // Refresh the grade list after updating
-        },
-        (error) => {
+          this.getAllGrades();
+        }
+        ,
+        error: (error) => {
           console.error('Error updating grade:', error);
         }
-      );
+      });
     }
   }
 

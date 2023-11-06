@@ -1,4 +1,4 @@
-<h1 style="text-align: center">Travel Logs</h1>
+<h1 style="text-align: center">Grades</h1>
 <div class="table-container"
      style="border: 1px solid black;
             border-radius: 5px"
@@ -7,10 +7,26 @@
   <table class="table table-striped">
     <thead>
     <tr>
-      <th>Grade Value</th>
-      <th>Student Name</th>
-      <th>Student Email</th>
-      <th>Subject Name</th>
+      <th (click)="sortTable('gradeValue')">
+        <a class="hoverTableHead"> Grade Value </a>
+        <img *ngIf="sortColumn === 'gradeValue' && isAscending" src="assets/svg/sort-up.svg" alt="Ascending">
+        <img *ngIf="sortColumn === 'gradeValue' && !isAscending" src="assets/svg/sort-down-alt.svg" alt="Descending">
+      </th>
+      <th (click)="sortTable('student.name')">
+        <a class="hoverTableHead"> Student Name </a>
+        <img *ngIf="sortColumn === 'student.name' && isAscending" src="assets/svg/sort-up.svg" alt="Ascending">
+        <img *ngIf="sortColumn === 'student.name' && !isAscending" src="assets/svg/sort-down-alt.svg" alt="Descending">
+      </th>
+      <th (click)="sortTable('student.email')">
+        <a class="hoverTableHead"> Student Email </a>
+        <img *ngIf="sortColumn === 'student.email' && isAscending" src="assets/svg/sort-up.svg" alt="Ascending">
+        <img *ngIf="sortColumn === 'student.email' && !isAscending" src="assets/svg/sort-down-alt.svg" alt="Descending">
+      </th>
+      <th (click)="sortTable('subject.subjectName')">
+       <a class="hoverTableHead"> Subject Name </a>
+        <img *ngIf="sortColumn === 'subject.subjectName' && isAscending" src="assets/svg/sort-up.svg" alt="Ascending">
+        <img *ngIf="sortColumn === 'subject.subjectName' && !isAscending" src="assets/svg/sort-down-alt.svg" alt="Descending">
+      </th>
     </tr>
     </thead>
     <tbody>
@@ -55,22 +71,9 @@
   </div>
 </div>
 <form #reportForm="ngForm"
-      *ngIf="isEdit"
-      (ngSubmit)="updateGrade()"
+      *ngIf="expandRow"
+      #scrollToElement
 >
-  <label>Grade Value</label>
-  <input type="number" [(ngModel)]="selectedGrade?.gradeValue" name="Grade Value" placeholder="Value" required/>
-  <label>Student Name</label>
-  <input type="text" [(ngModel)]="selectedGrade" name="Student Name" placeholder="Name" required/>
-  <label>Student Email</label>
-  <input type="email" [(ngModel)]="selectedGrade?.subject.subjectId" name="regNumber" placeholder="Reg Number" required/>
-  <div style="padding-top: 10px">
-    <button type="button" class="btn btn-success" [disabled]="!reportForm.form.valid" (click)="addGrade()">Send</button>
-    <button type="button" class="btn btn-danger" (click)="cancelAddGrade()">Cancel</button>
-  </div>
-</form>
-
-<form *ngIf="!isEdit" (ngSubmit)="addGrade()">
   <div class="form-group">
     <label for="subjectId">Subject:</label>
     <select class="form-control" id="subjectId" [(ngModel)]="newGrade.subjectId" name="subjectId">
@@ -87,10 +90,15 @@
     <label for="gradeValue">Grade Value:</label>
     <input type="number" class="form-control" id="gradeValue" [(ngModel)]="newGrade.gradeValue" name="gradeValue">
   </div>
-  <button type="submit" class="btn btn-primary">Add Grade</button>
+  <div style="padding-top: 10px">
+    <button type="button" class="btn btn-success" [disabled]="!reportForm.form.valid" (click)="addGrade()">Send</button>
+    <button type="button" class="btn btn-danger" (click)="cancelAddGrade()">Cancel</button>
+  </div>
 </form>
+
 <form *ngIf="selectedGrade"
       #reportForm="ngForm"
+      #scrollToElement
 >
   <label>Grade Value</label>
   <input type="number" [(ngModel)]="selectedGrade.gradeValue" name="Grade Value" placeholder="Value" required/>

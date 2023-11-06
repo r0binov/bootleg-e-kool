@@ -29,7 +29,7 @@ public class GradeController {
         return gradeService.addGrade(gradeDTO);
     }
     @PutMapping(path = "/updateGrade")
-    public String updateGrade(@RequestBody UpdateGradeDTO updateGradeDTO) {
+    public Grade updateGrade(@RequestBody UpdateGradeDTO updateGradeDTO) {
         return gradeService.updateGrade(updateGradeDTO);
     }
     @DeleteMapping(path = "/deleteGrade/{id}")
