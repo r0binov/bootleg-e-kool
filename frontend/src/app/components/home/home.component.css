@@ -1,0 +1,22 @@
+.home {
+  text-align: center;
+  padding:  250px 20px 20px 20px;
+  background-color: #333;
+  height: 100vh;
+  color: #fff;
+}
+.comp {
+  padding-top: 50px;
+  display: flex;
+  justify-content: space-evenly;
+  flex-wrap: wrap;
+  flex-direction: row;
+
+  justify-items: center;
+}
+html, body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  width: 100%;
+}

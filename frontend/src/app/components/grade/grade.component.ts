@@ -19,7 +19,7 @@ export class GradeComponent implements OnInit {
   isTableVisible = false;
   expandRow = false;
   grades: GradeModel[] = [];
-  newGrade: GradeDTOModel = new GradeDTOModel(0, 0, 0); // Initialize with default values
+  newGrade: GradeDTOModel = new GradeDTOModel(0, 0, 0);
   selectedGrade: GradeModel | null = null;
   isEdit = false;
 
@@ -68,6 +68,7 @@ export class GradeComponent implements OnInit {
   cancelEditedGrade(): void {
     this.selectedGrade = null;
   }
+
   sortTable(columnName: string) {
     if (this.sortColumn === columnName) {
       // If already sorted by the clicked column, toggle the sorting order
