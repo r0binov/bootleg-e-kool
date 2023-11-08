@@ -37,12 +37,8 @@ public class SubjectController {
     }
 
 
-    @PutMapping("/updateSubject/{id}")
-    public ResponseEntity<Subject> updateSubject(@PathVariable("id") Long id, @RequestBody Subject subject) {
-        if (!subjectService.getSubjectById(id).isPresent()) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
-        subject.setSubjectId(id);
+    @PutMapping("/updateSubject")
+    public ResponseEntity<Subject> updateSubject(@RequestBody Subject subject) {
         Subject updatedSubject = subjectService.saveSubject(subject);
         return new ResponseEntity<>(updatedSubject, HttpStatus.OK);
     }
