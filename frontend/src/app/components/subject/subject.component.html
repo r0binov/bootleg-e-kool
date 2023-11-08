@@ -1,0 +1,71 @@
+<app-navbar></app-navbar>
+<div class="body" style="padding-left: 100px; padding-right: 100px">
+  <h1 style="text-align: center; padding-bottom: 20px">Subjects</h1>
+  <div class="table-container"
+       style="border: 1px solid black;
+            border-radius: 5px"
+       *ngIf="subjects.length > 0"
+  >
+    <table class="table table-striped">
+      <thead>
+      <tr>
+        <th>
+          <p style="color: #337ab7; margin-bottom: 0;"> Subject Name</p>
+        </th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let subject of subjects;">
+        <td>{{ subject.subjectName}}</td>
+        <td style="display: flex; justify-content: space-around">
+          <button type="button" class="btn btn-primary" (click)="editSubject(subject)">
+            Edit
+          </button>
+          <button type="button" class="btn btn-danger" (click)="deleteSubject(subject.subjectId);">
+            Delete
+          </button>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+  <div style="text-align: center; margin-top: 10px" *ngIf="!expandRow">
+    <button type="button" class="btn btn-info" (click)="expandRow = true">Add Subject</button>
+  </div>
+  <div class="div-styling">
+    <form #reportForm="ngForm"
+          *ngIf="expandRow"
+    >
+      <div class="form-group">
+        <label>Subject Name:</label>
+        <input type="text" [(ngModel)]="newSubject.subjectName" name="Subject Name" placeholder="Value" required/>
+      </div>
+      <div style="padding-top: 10px">
+        <button type="button" class="btn btn-success" [disabled]="!reportForm.form.valid" (click)="addSubject()">Send
+        </button>
+        <button type="button" class="btn btn-danger" (click)="cancelAddSubject()">Cancel</button>
+      </div>
+    </form>
+  </div>
+  <div class="div-styling">
+    <form *ngIf="selectedSubject"
+          #reportForm="ngForm"
+          class="add-form"
+    >
+      <label>Subject Name</label>
+      <input type="text" [(ngModel)]="selectedSubject.subjectName" name="Subject Name" placeholder="Value" required/>
+      <div style="padding-top: 10px;">
+        <button type="submit"
+                class="btn btn-success"
+                [disabled]="!reportForm.form.valid"
+                (click)="updateSubject(selectedSubject)"
+        >
+          Save
+        </button>
+        <button type="submit" class="btn btn-danger" (click)="cancelEditedSubject()">Cancel</button>
+      </div>
+    </form>
+  </div>
+</div>
+<app-footer class="footer"></app-footer>
+

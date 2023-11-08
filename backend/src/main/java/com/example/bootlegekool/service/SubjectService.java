@@ -13,7 +13,6 @@ import java.util.Optional;
 public class SubjectService {
 
 
-
     private final SubjectRepository subjectRepository;
 
     @Autowired
@@ -32,8 +31,9 @@ public class SubjectService {
     public Optional<Subject> getSubjectById(Long id) {
         return subjectRepository.findById(id);
     }
-    public Subject getSubjectByIdOrThrow(Long id) {
-        return subjectRepository.findById(id)
+
+    public void getSubjectByIdOrThrow(Long id) {
+        subjectRepository.findById(id)
                 .orElseThrow(() -> new SubjectNotFoundException("Subject not found with ID: " + id));
     }
 

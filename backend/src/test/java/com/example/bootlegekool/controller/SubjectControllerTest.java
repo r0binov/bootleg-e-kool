@@ -67,7 +67,7 @@ public class SubjectControllerTest {
         Mockito.when(subjectService.saveSubject(updatedSubject)).thenReturn(updatedSubject);
 
         // Act
-        ResponseEntity<Subject> response = subjectController.updateSubject(subjectId, updatedSubject);
+        ResponseEntity<Subject> response = subjectController.updateSubject(updatedSubject);
 
         // Assert
         assertEquals(HttpStatus.OK, response.getStatusCode());
