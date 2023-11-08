@@ -1,10 +1,8 @@
-import {Injectable} from "@angular/core";
-import {HttpClient, HttpHeaders} from "@angular/common/http";
-import {GradeModel} from "../model/grade.model";
-import {GradeDTOModel} from "../model/gradeDTO.model";
-import {UpdateGradeDTOModel} from "../model/updateGradeDTO.model";
-import {Observable} from "rxjs";
-import {StudentModel} from "../model/student.model";
+import { Injectable } from '@angular/core';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { Observable } from 'rxjs';
+
+import { StudentModel } from '../model/student.model'; 
 
 @Injectable()
 export class StudentService {
@@ -18,20 +16,19 @@ export class StudentService {
   constructor(private http: HttpClient) {
   }
 
-
-  getStudentsFromApi = (): Observable<StudentModel[]> => {
+  getStudents = () => {
     return this.http.get<StudentModel[]>(this.apiUrl + "/");
   }
 
-  postStudentToApi = (student: StudentModel) => {
-    return this.http.post(this.apiUrl + "/addStudent", student, {headers: this.headers});
+  addStudent(student: StudentModel) {
+    return this.http.post(this.apiUrl + '/addStudent', student, { headers: this.headers });
   }
 
-  updateStudentInApi = (student: StudentModel) => {
-    return this.http.put((this.apiUrl + "/updateGrade"), student, {headers: this.headers});
+  updateStudent(student: StudentModel) {
+    return this.http.put(this.apiUrl + '/updateStudent', student, { headers: this.headers });
   }
 
-  deleteStudentInApi = (id: number): Observable<any> => {
-    return this.http.delete((this.apiUrl + `/deleteGrade/${id}`), {headers: this.headers});
+  deleteStudent = (studentId: number) => {
+    return this.http.delete((this.apiUrl + `/deleteStudent/${studentId}`), {headers: this.headers});
   }
 }

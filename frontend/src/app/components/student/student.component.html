@@ -1,0 +1,76 @@
+<h1 style="text-align: left">Students</h1>
+<div class="table-container" *ngIf="students.length > 0">
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th>
+          <a class="hoverTableHead"> Student Name </a>
+        </th>
+        <th>
+          <a class="hoverTableHead"> Student Email </a>
+        </th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let student of students;">
+        <td>{{ student.name }}</td>
+        <td>{{ student.email }}</td>
+        <td style="display: flex; justify-content: space-around">
+          <button type="button" class="btn btn-primary" (click)="editStudent(student)">
+            Edit
+          </button>
+          <button type="button" class="btn btn-danger" (click)="deleteStudent(student.studentId)">
+            Delete
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<div class="div-container" *ngIf="!isTableVisible">
+  <div class="div-content" *ngFor="let student of students">
+    <p>
+      <b> Student Name: </b> {{ student.name }}
+    </p>
+    <p>
+      <b> Student Email: </b> {{ student.email }}
+    </p>
+    <button type="button" class="btn btn-primary" (click)="editStudent(student); onEditClickScrollToElement()">
+      Edit
+    </button>
+    <button type="button" class="btn btn-danger" (click)="deleteStudent(student.studentId)">
+      Delete
+    </button>
+  </div>
+</div>
+
+<form #reportForm="ngForm" *ngIf="expandRow" #scrollToElement>
+  <div class="form-group">
+    <label for="name">Student Name:</label>
+    <input type="text" class="form-control" id="name" [(ngModel)]="newStudent.name" name="name">
+  </div>
+  <div class="form-group">
+    <label for="email">Student Email:</label>
+    <input type="text" class="form-control" id="email" [(ngModel)]="newStudent.email" name="email">
+  </div>
+  <div style="padding-top: 10px">
+    <button type="button" class="btn btn-success" [disabled]="!reportForm.form.valid" (click)="addStudent()">Add Student</button>
+    <button type="button" class="btn btn-danger" (click)="cancelAddStudent()">Cancel</button>
+  </div>
+</form>
+
+<form *ngIf="selectedStudent" #reportForm="ngForm" #scrollToElement>
+  <label>Student Name</label>
+  <input type="text" [(ngModel)]="selectedStudent.name" name="name" placeholder="Student Name" required/>
+  <label>Student Email</label>
+  <input type="text" [(ngModel)]="selectedStudent.email" name="email" placeholder="Student Email" required/>
+  <div style="padding-top: 10px;">
+    <button type="submit" class="btn btn-success" [disabled]="!reportForm.form.valid" (click)="updateStudent()">Save</button>
+    <button type="submit" class="btn btn-danger" (click)="cancelEditedStudent()">Cancel</button>
+  </div>
+</form>
+
+<div style="text-align: center; margin-top: 10px" *ngIf="!expandRow">
+  <button type="button" class="btn btn-info" (click)="expandRow = true">Add Student</button>
+</div>
