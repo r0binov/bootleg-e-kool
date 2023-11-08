@@ -1,6 +1,6 @@
 # bootleg-e-kool
 
-#In order to get data into the database after you have run the backend application and the schema has been created.
+## In order to get data into the database after you have run the backend application and the schema has been created.
 
 
 INSERT INTO student (name, email)
