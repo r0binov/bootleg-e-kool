@@ -1,13 +1,15 @@
-<h1 style="text-align: left">Students</h1>
+<app-navbar></app-navbar>
+<div class="body">
+<h1 style="text-align: center">Students</h1>
 <div class="table-container" *ngIf="students.length > 0">
   <table class="table table-striped">
     <thead>
       <tr>
         <th>
-          <a class="hoverTableHead"> Student Name </a>
+          <p style="color:#337ab7; margin-bottom: 0;"> Student Name </p>
         </th>
         <th>
-          <a class="hoverTableHead"> Student Email </a>
+          <p style="color:#337ab7; margin-bottom: 0;"> Student Email </p>
         </th>
       </tr>
     </thead>
@@ -74,3 +76,5 @@
 <div style="text-align: center; margin-top: 10px" *ngIf="!expandRow">
   <button type="button" class="btn btn-info" (click)="expandRow = true">Add Student</button>
 </div>
+</div>
+<app-footer></app-footer>
