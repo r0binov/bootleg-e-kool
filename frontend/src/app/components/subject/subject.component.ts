@@ -1,4 +1,4 @@
-import {Component, ElementRef, HostListener, OnInit, ViewChild} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {SubjectModel} from "../../model/subject.model";
 import {SubjectService} from "../../service/subject.service";
 
@@ -42,16 +42,22 @@ export class SubjectComponent implements OnInit {
   }
 
   addSubject() {
-    this.subjectService.postSubjectToApi(this.newSubject).subscribe(() => {
-      this.getSubjects();
-      this.newSubject = new SubjectModel(0, '');
-      this.expandRow = false
+    this.subjectService.postSubjectToApi(this.newSubject).subscribe({
+      next: () => {
+        this.getSubjects();
+        this.newSubject = new SubjectModel(0, '');
+        this.expandRow = false
+      },
+      error: (error) => {
+        alert(error)
+      }
     });
   }
 
   updateSubject(subject: SubjectModel) {
     this.subjectService.updateSubjectInApi(subject).subscribe(() => {
       this.getSubjects();
+      this.isEdit = false;
       this.selectedSubject = new SubjectModel(0, '')
     });
   }

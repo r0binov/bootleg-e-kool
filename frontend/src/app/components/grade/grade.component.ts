@@ -16,12 +16,13 @@ export class GradeComponent implements OnInit {
   constructor(private gradeService: GradeService) {
   }
 
-  isTableVisible = false;
-  expandRow = false;
   grades: GradeModel[] = [];
   newGrade: GradeDTOModel = new GradeDTOModel(0, 0, 0);
   selectedGrade: GradeModel | null = null;
+
   isEdit = false;
+  isTableVisible = false;
+  expandRow = false;
 
   subjects: SubjectModel[] = [];
   students: StudentModel[] = [];
@@ -111,25 +112,25 @@ export class GradeComponent implements OnInit {
   }
 
   getSubjects() {
-    this.gradeService.getSubjectsFromApi().subscribe(
-      (subjects: SubjectModel[]) => {
+    this.gradeService.getSubjectsFromApi().subscribe({
+      next: (subjects: SubjectModel[]) => {
         this.subjects = subjects;
       },
-      (error) => {
+      error: (error) => {
         console.error('Error fetching subjects:', error);
       }
-    );
+    });
   }
 
   getStudents() {
-    this.gradeService.getStudentsFromApi().subscribe(
-      (students: StudentModel[]) => {
+    this.gradeService.getStudentsFromApi().subscribe({
+      next: (students: StudentModel[]) => {
         this.students = students;
       },
-      (error) => {
+      error: (error) => {
         console.error('Error fetching students:', error);
       }
-    );
+    });
   }
 
   addGrade(): void {
@@ -137,7 +138,8 @@ export class GradeComponent implements OnInit {
 
       next: () => {
         this.getAllGrades();
-        this.newGrade = new GradeDTOModel(0, 0, 0)
+        this.newGrade = new GradeDTOModel(0, 0, 0);
+        this.expandRow = false;
       },
       error: (error) => {
         console.error('Error occured in adding grade:', error);
@@ -154,8 +156,8 @@ export class GradeComponent implements OnInit {
 
       this.gradeService.updateGradeInApi(updateGradeDTO).subscribe({
         next: () => {
-          this.expandRow = false;
           this.selectedGrade = null;
+          this.isEdit = false;
           this.getAllGrades();
         }
         ,

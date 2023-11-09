@@ -41,7 +41,8 @@
         <input type="text" [(ngModel)]="newSubject.subjectName" name="Subject Name" placeholder="Value" required/>
       </div>
       <div style="padding-top: 10px">
-        <button type="button" class="btn btn-success" [disabled]="!reportForm.form.valid" (click)="addSubject()">Send
+        <button type="button" class="btn btn-success" [disabled]="!reportForm.form.valid" (click)="addSubject()">Add
+          Subject
         </button>
         <button type="button" class="btn btn-danger" (click)="cancelAddSubject()">Cancel</button>
       </div>
