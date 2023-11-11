@@ -34,3 +34,24 @@ VALUES
     (5,1,37),
     (5,2,69)
 
+## Running the frontend application
+
+First, install angular-cli globally:
+```
+npm install -g @angular/cli
+``` 
+
+Then navigate to frontend project root and install required dependencies:
+```
+npm install
+```
+
+When dependencies are installed run the frontend application:
+```
+ng serve
+```
+
+and navigate to `http://localhost:4200` in your browser
+
+
+#Have fun!
